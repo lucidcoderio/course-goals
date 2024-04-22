@@ -1,2 +1,0 @@
-# course-goals
-course-goals
