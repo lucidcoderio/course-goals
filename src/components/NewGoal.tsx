@@ -1,38 +1,36 @@
-import { useRef, type ReactNode, type FC, type FormEvent } from "react";
+import { useRef, type FormEvent } from 'react';
 
 type NewGoalProps = {
-    onAddGoal: (goal: string, summary: string) => void
-}
-
-const NewGoal: FC<NewGoalProps> = ({onAddGoal}: NewGoalProps): ReactNode => {
-
-    const goal = useRef<HTMLInputElement>(null)
-    const summary = useRef<HTMLInputElement>(null)
-
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault()
-
-        const enteredGoal = goal.current!.value;
-        const enteredSummary = summary.current!.value;
-
-        event.currentTarget.reset();
-        
-        onAddGoal(enteredGoal,enteredSummary)
-    }
-
-    return <form onSubmit={handleSubmit}>
-         <p>
-            <label htmlFor="goal">Your goal</label>
-            <input id="goal" type="text" ref={goal} />
-         </p>
-         <p>
-            <label htmlFor="summary">Short summary</label>
-            <input id="summary" type="text" ref={summary} />
-         </p>
-         <p>
-            <button>Add Goal</button>
-         </p>
-    </form>
+  onAddGoal: (goal: string, summary: string) => void;
 };
 
-export default NewGoal;
+export default function NewGoal({ onAddGoal }: NewGoalProps) {
+  const goal = useRef<HTMLInputElement>(null);
+  const summary = useRef<HTMLInputElement>(null);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const enteredGoal = goal.current!.value;
+    const enteredSummary = summary.current!.value;
+
+    event.currentTarget.reset();
+    onAddGoal(enteredGoal, enteredSummary);
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <p>
+        <label htmlFor="goal">Your goal</label>
+        <input id="goal" type="text" ref={goal} />
+      </p>
+      <p>
+        <label htmlFor="summary">Short summary</label>
+        <input id="summary" type="text" ref={summary} />
+      </p>
+      <p>
+        <button>Add Goal</button>
+      </p>
+    </form>
+  );
+}

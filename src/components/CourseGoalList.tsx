@@ -1,25 +1,40 @@
-import { type ReactNode, type FC } from "react";
-import CourseGoal from "./CourseGoal";
-import { type CourseGoal as CGoal } from "../App";
+import CourseGoal from './CourseGoal.tsx';
+import { type CourseGoal as CGoal } from '../App.tsx';
+import InfoBox from './InfoBox.tsx';
+import { ReactNode } from 'react';
 
 type CourseGoalListProps = {
-  goals: Array<CGoal>;
+  goals: CGoal[];
   onDeleteGoal: (id: number) => void;
 };
 
-const CourseGoalList: FC<CourseGoalListProps> = ({
+export default function CourseGoalList({
   goals,
   onDeleteGoal,
-}: CourseGoalListProps): ReactNode => {
-  return goals.map((goal) => {
-    return (
-      <li key={goal.id}>
-        <CourseGoal title={goal.title} id={goal.id} onDelete={onDeleteGoal}>
-          {goal.description}
-        </CourseGoal>
-      </li>
-    );
-  });
-};
-
-export default CourseGoalList;
+}: CourseGoalListProps) {
+  if(goals.length === 0){
+    return(
+      <InfoBox mode='hint' severity='low' >
+        You have no course goals yet.
+      </InfoBox>
+    )
+  }
+  let warning: ReactNode;
+  if(goals.length >= 4) {
+    warning = <InfoBox mode='warning' severity='high'>Too many goals.</InfoBox>
+  }
+  return (
+    <>
+    {warning}
+    <ul>
+      {goals.map((goal) => (
+        <li key={goal.id}>
+          <CourseGoal id={goal.id} title={goal.title} onDelete={onDeleteGoal}>
+            <p>{goal.description}</p>
+          </CourseGoal>
+        </li>
+      ))}
+    </ul>
+    </>
+  );
+}

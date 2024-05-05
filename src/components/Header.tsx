@@ -1,22 +1,18 @@
-import { type ReactNode, type FC, type PropsWithChildren } from "react";
+import { type ReactNode } from 'react';
 
-type img = {
-  src: string;
-  alt: string;
+type HeaderProps = {
+  image: {
+    src: string;
+    alt: string;
+  };
+  children: ReactNode
 };
 
-type HeaderProps = PropsWithChildren<{ image: img }>;
-
-const Header: FC<HeaderProps> = ({
-  image,
-  children,
-}: HeaderProps): ReactNode => {
+export default function Header({image, children}: HeaderProps) {
   return (
     <header>
-      <img src={image.src} alt={image.alt} />
+      <img {...image} />
       {children}
     </header>
   );
-};
-
-export default Header;
+}
